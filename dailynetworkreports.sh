@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the email address to send the reports to
-email=oland@uw.edu
+email=email@email.com
 
 # Set the time to send the reports (6:00am PST)
 hour=6
