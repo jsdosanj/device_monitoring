@@ -1,16 +1,28 @@
 #!/bin/bash
 
 # Set the email address to send the reports to
-email=oland@uw.edu
+email=email@email.com
 
 # Set the time to send the reports (6:00am PST)
 hour=6
 timezone=PST
 
 # Set the log file name
-log_file=server_status.log
+log_file=server_report.log
 
-# Continuously monitor the server status and write to the log file
+# Display device information and write to the log file
+echo "Device Information:" >> $log_file
+echo "Device Name: $(hostname)" >> $log_file
+echo "Hostname: $(hostname -f)" >> $log_file
+echo "Users: $(who)" >> $log_file
+echo "Storage: $(df -h)" >> $log_file
+echo "RAM: $(free -m)" >> $log_file
+echo "CPU: $(lscpu)" >> $log_file
+echo "GPU: $(lspci | grep -i vga)" >> $log_file
+echo "Internet Connection: $(ip route | grep default | awk '{print $5}')" >> $log_file
+echo "" >> $log_file
+
+# Continuously monitor network activity and write to the log file
 while true; do
     # Capture the current date and time
     date_time=$(date +"%Y-%m-%d %T %Z")
@@ -18,30 +30,19 @@ while true; do
     # Capture the network activity
     network_activity=$(netstat -an)
 
-    # Capture the latest data backup
-    latest_backup=$(ls -t /path/to/backup/directory | head -n 1)
-
-    # Check the BitLocker encryption status
-    encryption_status=$(manage-bde -status | grep "Encryption Status")
-
-    # Check the Internet connection type
-    connection_type=$(ip link | grep "state UP" | awk '{print $9}')
-
-    # Check the device's connection to the netID
-    netid_connection=$(ping -c 1 netid.uw.edu | grep "received" | awk '{print $4}')
-
-    # Write the date and time and server status to the log file
+    # Write the date and time and network activity to the log file
     echo "$date_time" >> $log_file
-    echo "Network activity: $network_activity" >> $log_file
-    echo "Latest data backup: $latest_backup" >> $log_file
-    echo "$encryption_status" >> $log_file
-    echo "Internet connection type: $connection_type" >> $log_file
-    echo "Connection to netID: $netid_connection" >> $log_file
+    echo "$network_activity" >> $log_file
     echo "" >> $log_file
 
-    # Sleep for 1 minute before capturing the next batch of status
+    # Sleep for 1 minute before capturing the next batch of activity
     sleep 60
 done &
+
+# Check the latest data backup and write to the log file
+echo "Latest Data Backup:" >> $log_file
+echo "$(ls -lt /path/to/backup/directory | head -n 1)" >> $log_file
+echo "" >> $log_file
 
 # Wait until the specified time to send the reports
 while true; do
