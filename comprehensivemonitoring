@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Set the email address to send the reports to
+email=oland@uw.edu
+
+# Set the time to send the reports (6:00am PST)
+hour=6
+timezone=PST
+
+# Set the log file name
+log_file=server_status.log
+
+# Continuously monitor the server status and write to the log file
+while true; do
+    # Capture the current date and time
+    date_time=$(date +"%Y-%m-%d %T %Z")
+
+    # Capture the network activity
+    network_activity=$(netstat -an)
+
+    # Capture the latest data backup
+    latest_backup=$(ls -t /path/to/backup/directory | head -n 1)
+
+    # Check the BitLocker encryption status
+    encryption_status=$(manage-bde -status | grep "Encryption Status")
+
+    # Check the Internet connection type
+    connection_type=$(ip link | grep "state UP" | awk '{print $9}')
+
+    # Check the device's connection to the netID
+    netid_connection=$(ping -c 1 netid.uw.edu | grep "received" | awk '{print $4}')
+
+    # Write the date and time and server status to the log file
+    echo "$date_time" >> $log_file
+    echo "Network activity: $network_activity" >> $log_file
+    echo "Latest data backup: $latest_backup" >> $log_file
+    echo "$encryption_status" >> $log_file
+    echo "Internet connection type: $connection_type" >> $log_file
+    echo "Connection to netID: $netid_connection" >> $log_file
+    echo "" >> $log_file
+
+    # Sleep for 1 minute before capturing the next batch of status
+    sleep 60
+done &
+
+# Wait until the specified time to send the reports
+while true; do
+    # Get the current hour and timezone
+    current_hour=$(date +"%H" -d "1 hour ago")
+    current_timezone=$(
