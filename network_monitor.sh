@@ -35,6 +35,16 @@ while true; do
     echo "$network_activity" >> $log_file
     echo "" >> $log_file
 
+# Check for software updates every hour
+while true; do
+    # Check for updates
+    updates=$(apt-get update)
+
+    # Write the update status to the log file
+    echo "$date_time" >> $log_file
+    echo "$updates" >> $log_file
+    echo "" >> $log_file
+
     # Sleep for 1 minute before capturing the next batch of activity
     sleep 60
 done &
