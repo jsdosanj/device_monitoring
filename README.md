@@ -1,4 +1,4 @@
-# networkreporting
+# network_monitor
 Here is a bash script that you can use to display device information, monitor all network activity, and send reports to an email address at 6:00am PST every day
 
 This script uses the "netstat" command to capture network activity and writes the activity to a log file called "network_activity.log". The script runs continuously in the background, capturing network activity every minute.
