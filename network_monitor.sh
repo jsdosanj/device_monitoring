@@ -8,7 +8,19 @@ hour=6
 timezone=PST
 
 # Set the log file name
-log_file=network_activity.log
+log_file=device_info.log
+
+# Display device information
+echo "Device Name: $(hostname)" >> $log_file
+echo "Hostname: $(hostname -f)" >> $log_file
+echo "Users: $(who)" >> $log_file
+echo "Storage: $(df -h)" >> $log_file
+echo "RAM: $(free -h)" >> $log_file
+echo "CPU: $(lscpu)" >> $log_file
+echo "GPU: $(lspci | grep -i vga)" >> $log_file
+echo "Internet Connection: $(nmcli connection show --active)" >> $log_file
+echo "Firewall Settings: $(ufw status)" >> $log_file
+echo "BitLocker: $(manage-bde -status)" >> $log_file
 
 # Continuously monitor network activity and write to the log file
 while true; do
@@ -36,12 +48,5 @@ while true; do
     # Check if it is time to send the reports
     if [ $current_hour -eq $hour ] && [ $current_timezone == $timezone ]; then
         # Send the log file as an email attachment
-        cat $log_file | mail -s "Network Activity Report" -a $log_file $email
+        cat $log_file | mail -s
 
-        # Clear the log file
-        > $log_file
-    fi
-
-    # Sleep for 1 minute before checking the time again
-    sleep 60
-done
