@@ -7,6 +7,6 @@ At 6:00am PST every day, the script sends the log file as an email attachment to
 
 To run this script, save it to a file and make it executable using the following command:
 
-`chmod +x dailynetworkreports.sh`
+`chmod +x network_monitor.sh`
 
 Then, you can run the script by typing "./network_monitor.sh". The script will run in the background and will continue to monitor network activity and send reports even if the server is restarted.
