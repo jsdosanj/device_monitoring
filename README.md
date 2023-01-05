@@ -1,5 +1,5 @@
 # networkreporting
-This bash script that you can use to monitor all network activity on a server and send reports to an email address at 6:00am PST every day
+Here is a bash script that you can use to monitor all network activity, the latest data backup, the status of BitLocker encryption, the type of Internet connection, and the device's connection to the netID on a server, and send reports to an email address at 6:00am PST every day
 
 This script uses the "netstat" command to capture network activity and writes the activity to a log file called "network_activity.log". The script runs continuously in the background, capturing network activity every minute.
 
