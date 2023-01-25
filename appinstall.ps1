@@ -1,7 +1,12 @@
 # 1. Make sure the Microsoft App Installer is installed:
 #    https://www.microsoft.com/en-us/p/app-installer/9nblggh4nns1
-# 2. Edit the list of apps to install.
-# 3. Run this script as administrator.
+# 2. Open Terminal/PowerShell as Administrator
+# 3. Place this script on the Desktop and enter this command
+#    cd C:\Users\username\Desktop
+# 4. Run "Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process" 
+#    before running the script to temporarily allow scripts to be run
+# 5. Run this script
+#    ./appinstall.ps1
 
 Write-Output "Installing Apps"
 $apps = @(
@@ -16,6 +21,8 @@ $apps = @(
     @{name = "Mozilla.Firefox" },
     @{name = "Notepad++.Notepad++" },
     @{name = "VideoLAN.VLC" },
+    @{name = "Sophos.SophosEndpointAgent" },
+    @{name = "Microsoft.Office365 "},
     @{name = "WinDirStat.WinDirStat" },
     @{name = "Zoom.Zoom" }
 );
